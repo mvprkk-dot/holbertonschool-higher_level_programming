@@ -1,32 +1,42 @@
 #!/usr/bin/python3
-"""Modul matrisin bölünməsi funksiyasını ehtiva edir."""
+"""Module for matrix_divided method."""
 
 
 def matrix_divided(matrix, div):
-    """Matrisin bütün elementlərini div-ə bölür.
+    """Divides all elements of a matrix.
 
     Args:
-        matrix: Tam ədəd və ya float siyahılarının siyahısı.
-        div: Bölən (rəqəm olmalıdır).
+        matrix: A list of lists of integers or floats.
+        div: The number to divide by.
+
+    Raises:
+        TypeError: If matrix is not a list of lists of integers/floats.
+        TypeError: If rows of the matrix are not the same size.
+        TypeError: If div is not a number.
+        ZeroDivisionError: If div is 0.
 
     Returns:
-        Bölünmüş elementlərdən ibarət yeni matris.
+        A new matrix with the result of the division.
     """
     msg = "matrix must be a matrix (list of lists) of integers/floats"
-    if not isinstance(matrix, list) or len(matrix) == 0:
+
+    if not isinstance(matrix, list) or not matrix:
         raise TypeError(msg)
 
     for row in matrix:
-        if not isinstance(row, list) or len(row) == 0:
+        if not isinstance(row, list) or not row:
             raise TypeError(msg)
         for x in row:
-            if not isinstance(x, (int, float)):
+            if not isinstance(x, (int, float)) or x != x or abs(x) > 1e308:
                 raise TypeError(msg)
 
     if not all(len(row) == len(matrix[0]) for row in matrix):
         raise TypeError("Each row of the matrix must have the same size")
 
     if not isinstance(div, (int, float)):
+        raise TypeError("div must be a number")
+
+    if div != div or abs(div) > 1e308:
         raise TypeError("div must be a number")
 
     if div == 0:
