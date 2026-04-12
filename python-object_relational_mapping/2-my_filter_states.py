@@ -16,9 +16,10 @@ if __name__ == "__main__":
         db=sys.argv[3]
     )
     cur = db.cursor()
-    # Sistem məhz bu formatı tələb edir:
-    query = "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY id ASC".format(sys.argv[4])
-    cur.execute(query)
+    # Sətiri bölürük ki, 79 simvoldan uzun olmasın (E501-i düzəltmək üçün)
+    sql_query = "SELECT * FROM states WHERE name LIKE BINARY '{}' " \
+                "ORDER BY id ASC".format(sys.argv[4])
+    cur.execute(sql_query)
     rows = cur.fetchall()
     for row in rows:
         print(row)
