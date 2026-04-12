@@ -10,7 +10,7 @@ def add_integer(a, b=98):
         b: the second integer.
 
     Raises:
-        TypeError: if a or b are not integers or floats, or are NaN/Inf.
+        TypeError: if a or b are not integers or floats.
 
     Returns:
         The sum of the two integers.
@@ -20,7 +20,7 @@ def add_integer(a, b=98):
     if not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
 
-    # NaN və Infinity yoxlaması - int() çevirməsindən əvvəl mütləq olmalıdır
+    # NaN və Infinity yoxlaması (int çevrilməsindən əvvəl)
     if a != a or a == float('inf') or a == float('-inf'):
         raise TypeError("a must be an integer")
     if b != b or b == float('inf') or b == float('-inf'):
