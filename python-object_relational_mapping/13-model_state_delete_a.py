@@ -7,20 +7,17 @@ from sqlalchemy.orm import sessionmaker
 
 
 if __name__ == "__main__":
-    # Engine yaradılır
-    conn_str = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
-    engine = create_engine(conn_str.format(sys.argv[1], sys.argv[2],
-                                           sys.argv[3]), pool_pre_ping=True)
-    Base.metadata.create_all(engine)
-
-    # Sessiya yaradılır
+    u, p, d = sys.argv[1], sys.argv[2], sys.argv[3]
+    # Sətiri tək saxlayırıq ki, heç bir indentation problemi olmasın
+    conn = 'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(u, p, d)
+    engine = create_engine(conn, pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Adında 'a' olan bütün ştatlar tapılır və silinir
-    states_to_delete = session.query(State).filter(State.name.contains('a'))\
-                                          .all()
-    for state in states_to_delete:
+    # Bütün sorğunu tək sətirdə yazırıq (E127-nin qarşısını almaq üçün)
+    states = session.query(State).filter(State.name.contains('a')).all()
+
+    for state in states:
         session.delete(state)
 
     session.commit()
