@@ -12,14 +12,12 @@ if __name__ == "__main__":
         passwd=sys.argv[2],
         db=sys.argv[3]
     )
-    
     cur = db.cursor()
-    # Adı 'N' ilə başlayanları seçirik (Böyük-kiçik hərf həssaslığı üçün BINARY)
-    cur.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC")
-    
+    # SQL sorğusu sətirini qısaldırıq ki, E501 xətası olmasın
+    query = "SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC"
+    cur.execute(query)
     rows = cur.fetchall()
     for row in rows:
         print(row)
-        
     cur.close()
     db.close()
