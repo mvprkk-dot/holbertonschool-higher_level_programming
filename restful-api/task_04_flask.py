@@ -54,12 +54,18 @@ def add_user():
     sent in the request. Validates that a username is provided and
     checks for duplicates before adding.
     """
-    data = request.get_json()
-    if not data or 'username' not in data:
+    data = request.get_json(silent=True)
+
+    if data is None:
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    if 'username' not in data:
         return jsonify({"error": "Username is required"}), 400
+
     username = data.get('username')
     if username in users:
-        return jsonify({"error": "User already exists"}), 409
+        return jsonify({"error": "Username already exists"}), 409
+
     users[username] = {
         "username": username,
         "name": data.get("name"),
