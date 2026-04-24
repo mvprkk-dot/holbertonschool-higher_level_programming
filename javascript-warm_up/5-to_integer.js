@@ -1,9 +1,7 @@
 #!/usr/bin/node
-// num değerini const ile tanımla
-const num = Math.floor(Number(process.argv[2]));
 
-if (isNaN(num)) {
+if (isNaN(process.argv[2])) {
   console.log('Not a number');
 } else {
-  console.log('Integer: ' + num);
+  console.log('My number: ' + process.argv[2]);
 }
