@@ -1,14 +1,9 @@
 #!/usr/bin/node
-// JS Script
 
-let num = parseInt(process.argv[2]);
-
-if (num) {
-  for (let i = 0; i < num; i++) {
-    console.log('X'.repeat(num));
-  }
-} else if (num < 0) {
-  console.log('');
-} else {
+if (isNaN(process.argv[2])) {
   console.log('Missing size');
+} else {
+  for (let i = 0; i < process.argv[2]; i++) {
+    console.log('X'.repeat(process.argv[2]));
+  }
 }
