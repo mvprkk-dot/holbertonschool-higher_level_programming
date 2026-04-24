@@ -12,7 +12,6 @@ app = Flask(__name__)
 # where the key is the username and the value is a dictionary of user details
 users = {}
 
-
 @app.route('/')
 def home():
     """
@@ -20,7 +19,6 @@ def home():
     when they access the root URL of the Flask application.
     """
     return "Welcome to the Flask API!"
-
 
 @app.route('/data')
 def data():
@@ -30,7 +28,6 @@ def data():
     """
     return jsonify(list(users.keys()))
 
-
 @app.route('/status')
 def status():
     """
@@ -38,7 +35,6 @@ def status():
     is currently running and healthy for monitoring purposes.
     """
     return "OK"
-
 
 @app.route('/users/<username>')
 def get_user(username):
@@ -51,7 +47,6 @@ def get_user(username):
         return jsonify(user)
     return jsonify({"error": "User not found"}), 404
 
-
 @app.route('/add_user', methods=['POST'])
 def add_user():
     """
@@ -62,11 +57,9 @@ def add_user():
     data = request.get_json()
     if not data or 'username' not in data:
         return jsonify({"error": "Username is required"}), 400
-
     username = data.get('username')
     if username in users:
-        return jsonify({"error": "User already exists"}), 400
-
+        return jsonify({"error": "User already exists"}), 409
     users[username] = {
         "username": username,
         "name": data.get("name"),
@@ -74,7 +67,6 @@ def add_user():
         "city": data.get("city")
     }
     return jsonify({"message": "User added", "user": users[username]}), 201
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
