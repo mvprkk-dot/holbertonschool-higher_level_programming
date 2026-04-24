@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """
-write to file and print out its length
+Fayla yazan və simvol sayını qaytaran funksiya
 """
 
 
 def write_file(filename="", text=""):
-    """ write the file and print out its length """
-
+    """Faylı açır və mətni içinə yazır"""
     with open(filename, 'w', encoding='utf-8') as file:
-        return len(file.write(text))
+        return file.write(text)
