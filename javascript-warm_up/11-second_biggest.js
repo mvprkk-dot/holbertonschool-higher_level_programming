@@ -1,17 +1,10 @@
 #!/usr/bin/node
-// JS Script
 
-function sortNumber (a, b) {
-  return a - b;
-}
-let argsLen = process.argv.length;
-if (argsLen === 2 || argsLen === 3) {
-  console.log('0');
+if (process.argv.length > 3) {
+  const array = process.argv.slice(2).map(Number);
+
+  array.splice(array.indexOf(Math.max.apply(null, array)), 1);
+  console.log(Math.max.apply(null, array));
 } else {
-  let arr = [];
-  for (let i = 2; i < argsLen; i++) {
-    arr.push(process.argv[i]);
-  }
-  arr.sort(sortNumber);
-  console.log(arr[arr.length - 2]);
+  console.log(0);
 }
