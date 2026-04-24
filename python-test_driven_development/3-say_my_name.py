@@ -1,31 +1,30 @@
 #!/usr/bin/python3
+
 """
-
-This module is composed by a function prints a message
-
+This module provides a function that divides all elements of a matrix.
 """
 
 
 def say_my_name(first_name, last_name=""):
-    """ Function that prints "My name is <first name> <last name>"
+    """
+    Print full name.
 
-    Args:
-        first_name: first name
-        last_name: last name
+    Parameters:
+        irst_name: string of first name
+        last_name: string of last name
 
     Returns:
-        No return
+        full name: first name and last name combine
 
     Raises:
-        TypeError: If first_name or last_name is not a string
-
+        TypeError: if the type is not string
 
     """
-
-    if type(first_name) is not str:
+    if first_name =="" and last_name == "":
+             raise TypeError("say_my_name() missing 1 required"
+                             "positional argument: 'first_name'")
+    if not isinstance(first_name, str):
         raise TypeError("first_name must be a string")
-
-    if type(last_name) is not str:
+    if not isinstance(last_name, str):
         raise TypeError("last_name must be a string")
-
-    print("My name is {} {}".format(first_name, last_name))
+    print(f"My name is {first_name} {last_name}")
