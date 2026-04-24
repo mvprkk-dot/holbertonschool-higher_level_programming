@@ -1,48 +1,54 @@
 #!/usr/bin/python3
-""" This module fetches posts from the API and prints them to the console """
-from flask import Flask
-from flask import jsonify, request
+"""
+Bu modul istifadəçi idarəetməsi üçün sadə bir Flask API təqdim edir.
+İstifadəçilərin əlavə edilməsi, siyahıya alınması və məlumatların
+gətirilməsi funksiyalarını dəstəkləyir.
+"""
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Initialize an empty users dictionary to store user data
+# İstifadəçi məlumatlarını yadda saxlayan lüğət (In-memory storage)
 users = {}
+
 
 @app.route('/')
 def home():
-    """ Home endpoint """
+    """Əsas səhifə üçün mesaj qaytarır."""
     return "Welcome to the Flask API!"
+
 
 @app.route('/data')
 def data():
-    """ Data endpoint """
-    return jsonify(list(users.keys()))  # Return a list of usernames
+    """Sistemdəki bütün istifadəçi adlarının siyahısını qaytarır."""
+    return jsonify(list(users.keys()))
+
 
 @app.route('/status')
 def status():
-    """ Status endpoint """
+    """API-ın işlək vəziyyətdə olduğunu yoxlamaq üçün endpoint."""
     return "OK"
+
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    """ Add a new user to the system """
+    """
+    Yeni istifadəçini sistemə əlavə edir.
+    Gözlənilən JSON formatı: {"username": "ad", "name": "...", ...}
+    """
     data = request.get_json()
-    
-    # Check if username is present in the request data
+
+    # JSON datası və ya username yoxdursa xəta qaytar
     if not data or "username" not in data:
         return jsonify({"error": "Username is required"}), 400
 
     username = data["username"]
 
-    # Log the current users and incoming username for debugging
-    print(f"Current users: {users}")
-    print(f"Incoming username: {username}")
-
-    # Check if the user already exists
+    # İstifadəçinin artıq mövcud olub-olmadığını yoxla
     if username in users:
         return jsonify({"error": "User already exists"}), 400
 
-    # Add the new user
+    # İstifadəçi məlumatlarını topla
     user_data = {
         "username": username,
         "name": data.get("name"),
@@ -51,7 +57,6 @@ def add_user():
     }
     users[username] = user_data
 
-    # Return success message and user data
     return jsonify({
         "message": "User added",
         "user": user_data
@@ -59,14 +64,15 @@ def add_user():
 
 
 @app.route("/users/<username>")
-def get_username(username):
-    """ Retrieve user information by username """
-    if username not in users:
-        return jsonify({"error": "User not found"}), 404
+def get_user(username):
+    """Müəyyən bir istifadəçinin məlumatlarını qaytarır."""
+    user_info = users.get(username)
 
-    user_info = users[username]
+    if not user_info:
+        return jsonify({"error": "User not found"}), 404
 
     return jsonify(user_info)
 
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
