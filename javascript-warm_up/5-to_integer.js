@@ -1,10 +1,9 @@
 #!/usr/bin/node
-// JS Script
+// num değerini const ile tanımla
+const num = Math.floor(Number(process.argv[2]));
 
-let num = parseInt(process.argv[2]);
-
-if (num) {
-  console.log('My number: ' + num);
-} else {
+if (isNaN(num)) {
   console.log('Not a number');
+} else {
+  console.log('Integer: ' + num);
 }
