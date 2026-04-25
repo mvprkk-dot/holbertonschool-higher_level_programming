@@ -1,18 +1,32 @@
 #!/usr/bin/python3
+"""Kvadratı təyin edən modul."""
+
+
 class Square:
-    """ A class that defines a square by its size
-    """
+    """Kvadratı təmsil edən klas."""
+
     def __init__(self, size=0):
-        """ Method to initialize the square object
+        """
+        Yeni bir Square yaradır.
+
+        Args:
+            size (int): Kvadratın ölçüsü.
+
+        Raises:
+            TypeError: Əgər size integer deyilsə.
+            ValueError: Əgər size 0-dan kiçikdirsə.
         """
         if not isinstance(size, int):
             raise TypeError("size must be an integer")
-        elif size < 0:
+        if size < 0:
             raise ValueError("size must be >= 0")
-        else:
-            self.__size = size
+        self.__size = size
 
     def area(self):
-        """ Method that returns the square are of the object
         """
-        return (self.__size ** 2)
+        Kvadratın cari sahəsini hesablayır.
+
+        Returns:
+            Kvadratın sahəsi (size * size).
+        """
+        return self.__size * self.__size
