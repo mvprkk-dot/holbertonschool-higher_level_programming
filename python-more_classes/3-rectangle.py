@@ -12,12 +12,12 @@ class Rectangle:
 
     @property
     def width(self):
-        """Eni götürmək üçün getter."""
+        """Eni götürür."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """Eni təyin etmək üçün setter."""
+        """Eni təyin edir."""
         if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value < 0:
@@ -26,12 +26,12 @@ class Rectangle:
 
     @property
     def height(self):
-        """Hündürlüyü götürmək üçün getter."""
+        """Hündürlüyü götürür."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """Hündürlüyü təyin etmək üçün setter."""
+        """Hündürlüyü təyin edir."""
         if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value < 0:
@@ -39,25 +39,21 @@ class Rectangle:
         self.__height = value
 
     def area(self):
-        """Düzbucaqlının sahəsini qaytarır."""
+        """Sahəni hesablayır."""
         return self.__width * self.__height
 
     def perimeter(self):
-        """Düzbucaqlının perimetrini qaytarır."""
+        """Perimetri hesablayır."""
         if self.__width == 0 or self.__height == 0:
             return 0
         return 2 * (self.__width + self.__height)
 
     def __str__(self):
-        """Düzbucaqlını '#' simvolu ilə vizual təmsil edir."""
+        """Düzbucaqlını '#' ilə çap edir."""
         if self.__width == 0 or self.__height == 0:
             return ""
-        
-        rect_lines = []
-        for i in range(self.__height):
-            rect_lines.append("#" * self.__width)
-        return "\n".join(rect_lines)
+        return (("#" * self.__width + "\n") * self.__height)[:-1]
 
     def __repr__(self):
-        """Obyektin rəsmi sətir təmsilini qaytarır."""
-        return "Rectangle({}, {})".format(self.__width, self.__height)
+        """Obyektin string təmsilini qaytarır."""
+        return "Rectangle({:d}, {:d})".format(self.__width, self.__height)
